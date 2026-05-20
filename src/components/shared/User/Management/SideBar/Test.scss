@@ -1,0 +1,154 @@
+.admin-left-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  /* Khối thông tin Avatar */
+  .drop-main-container {
+    display: flex;
+    width: 328px;
+    height: 101px;
+    border: 1px solid #00000040;
+    border-radius: 15px;
+    background-color: #ffffff;
+    justify-content: start;
+
+    .avt-wrapper {
+      .avt-container {
+        background-color: #ffffff;
+        width: auto;
+        height: 100%;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        padding-left: 15px;
+
+        .avt {
+          height: 80%;
+          border-radius: 50%;
+        }
+      }
+    }
+
+    .admin-inf {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 8px;
+      margin-left: 15px;
+      margin-right: 25px;
+
+      p { margin: 0; }
+
+      .role-container {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+
+        .role {
+          font-size: 13.5px;
+          color: #21A3FF;
+        }
+      }
+    }
+  }
+
+  /* Khối menu options */
+  .option-main-container {
+    background-color: #ffffff;
+    width: 328px;
+    border-radius: 15px;
+    height: auto;
+    border: 1px solid #00000040;
+    overflow: hidden; // Đảm bảo các item active không đè lên border-radius của cha
+
+    // NavLink render ra thẻ <a>, cần reset style
+    a {
+      text-decoration: none;
+      color: inherit;
+      display: block; // Để bao phủ hết chiều rộng
+    }
+
+    .option-left {
+      display: flex;
+      gap: 10px;
+      padding: 15px 22px;
+      cursor: pointer;
+      align-items: center;
+      transition: all 0.3s ease; // Thêm hiệu ứng chuyển màu cho mượt
+      
+      p { margin: 0; }
+      
+      .item-options {
+        width: 140px;
+      }
+
+      .arrow-box {
+        margin-left: 40px;
+        display: flex;
+        align-items: center;
+      }
+
+      /* Các trạng thái Active */
+      // Dùng & để kết hợp class: ví dụ .option-left.active
+      &.active {
+        background-color: #e1a730;
+        color: #ffffff;
+      }
+
+      &.active-top {
+        background-color: #e1a730;
+        color: #ffffff;
+        border-top-left-radius: 14px; // Nhỏ hơn cha 1 xíu để khớp góc
+        border-top-right-radius: 14px;
+      }
+
+      &.active-bottom {
+        background-color: #e1a730;
+        color: #ffffff;
+        border-bottom-left-radius: 14px;
+        border-bottom-right-radius: 14px;
+      }
+
+      /* Danh sách con thụt lề */
+      &.list {
+        padding-left: 45px;
+        font-size: 0.95rem;
+        background-color: #f9f9f9; // Làm nền hơi khác một chút cho menu con
+        
+        &.active {
+          background-color: #e1a730; // Khi active thì vẫn lấy màu chủ đạo
+        }
+      }
+
+      // Hover effect cho các mục chưa active
+      &:hover:not(.active):not(.active-top):not(.active-bottom) {
+        background-color: #fff9ed;
+        color: #e1a730;
+      }
+    }
+
+    // Đặc biệt cho khối Dropdown (Quản lý bài đăng)
+    .option-left.drop {
+      display: flex;
+      justify-content: space-between;
+      
+      // Khi menu con đang mở, ta làm nổi bật menu cha
+      &.active {
+        border-bottom: 1px solid #ffffff30;
+      }
+    }
+
+    .left-drop-item {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .option-left-list-container {
+      background-color: #f9f9f9;
+      border-top: 1px solid #00000010;
+      border-bottom: 1px solid #00000010;
+    }
+  }
+}

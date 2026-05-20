@@ -1,0 +1,155 @@
+.main-container-order-manage {
+  background-color: #ffffff;
+  min-height: 1170px;
+  border-radius: 15px;
+  border: 1px solid hsla(0, 0%, 0%, 0.251);
+  padding: 10px 60px;
+  display: flex;
+  flex-direction: column;
+
+  .order-header {
+    display: flex;
+    justify-content: space-between;
+    .header-left {
+      display: flex;
+      align-items: center;
+      padding-top: 20px;
+      height: 40px;
+      .title { font-size: 22px; }
+    }
+    .header-right {
+      display: flex;
+      width:60%;
+      align-items: end;
+      // padding-bottom: 2px;
+
+      .summary-text {
+        width: 100%;
+        span {
+          color: #e1a730;
+          font-weight: bold;
+        }
+      }
+
+      .search-box {
+        position: relative;
+        display: flex;
+        justify-content: end;
+        width: auto;
+        input {
+          width: 243px;
+          height: 35px;
+          border: 1px solid #bdbdbd;
+          background-color: #fff;
+          padding: 0 35px 0 12px;
+          border-radius: 6px;
+          outline: none;
+        }
+        .search-icon {
+          position: absolute;
+          right: 10px;
+          top: 50%;
+          transform: translateY(-50%);
+          color: #bdbdbd;
+        }
+      }
+    }
+  }
+
+  .divider { border: 1px solid #ddd; margin: 10px 0; }
+
+  .order-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 9px;
+
+    .item-order {
+      display: grid;
+      grid-template-columns: 1.8fr 3.6fr 1.65fr;
+      gap: 25px;
+      padding: 12px 17px;
+      border: 2px solid #f5f5f5;
+      border-radius: 15px;
+
+      .img-box img { width: 100%; border-radius: 15px; }
+
+      .info-box {
+        display: flex;
+        flex-direction: column;
+        gap: 11px;
+        .room-title { font-size: 19px; margin-bottom: 28px; }
+        .address-box { display: flex; gap: 5px; color: #757575; }
+        .customer-label { margin-top: 11px; color: #e1a730; font-size: 15px; }
+        
+        .customer-info {
+          display: flex;
+          justify-content: space-between;
+          .customer-name { display: flex; gap: 5px; font-weight: 500; }
+          .customer-contact {
+            display: flex;
+            gap: 37px;
+            .contact-item { display: flex; gap: 5px; color: #000; }
+          }
+        }
+      }
+
+      .action-box {
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        justify-content: center;
+
+        .price-display {
+          padding: 0 15px;
+          .price-numb { color: #E1A730; font-weight: 700; font-size: 28px; margin: 0; }
+          .price-unit { color: #707070; font-size: 16px; margin: 0; }
+        }
+
+        .btn-group-column {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          padding: 0 15px;
+          
+          .btn-action {
+            display: flex;
+            align-items: center;
+            width: 137px;
+            padding: 9px 17px;
+            border-radius: 6px;
+            cursor: pointer;
+            span { margin-left: 8px; font-weight: 500; }
+
+            &.btn-confirm { background-color: #FEEFCB; border: 1px solid #E6AC28; color: #925400; }
+            &.btn-reject { background-color: #FFECEE; border: 1px solid #BB2A33; color: #BB2A33; }
+          }
+        }
+
+        .status-only {
+          padding: 0 15px;
+          margin-bottom: 30px;
+          .btn-status {
+            display: flex;
+            align-items: center;
+            width: 137px;
+            padding: 8px 17px;
+            border-radius: 6px;
+            
+            &.status-rejected { background-color: #FFECEE80; border: 1px solid #BB2A3380; color: #BB2A3380; }
+            &.status-confirmed { background-color: #E9F5CE80; border: 1px solid #436F0080; color: #436F0080; }
+            span { margin-left: 15px; }
+          }
+        }
+      }
+    }
+  }
+}
+.approved-label {
+  background: #e6f9ec;
+  color: #16a34a;
+  padding: 8px 12px;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 600;
+}

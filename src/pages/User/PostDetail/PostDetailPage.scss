@@ -1,0 +1,725 @@
+/* ================= LAYOUT CHÍNH ================= */
+.post-detail-layout {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  background: #f5f5f5;
+}
+
+/* ================= MAP FIXED ================= */
+.map-fixed {
+  width: 42%;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  flex-shrink: 0;
+  background: #eaeaea;
+  border-right: 1px solid #ddd;
+
+  .map-iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  .map-placeholder {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #777;
+    font-size: 14px;
+  }
+}
+
+/* ================= CONTENT SCROLL ================= */
+.post-detail-content {
+  width: 58%;
+  height: 100vh;
+  overflow-y: auto;
+  background: #f5f5f5;
+}
+
+/* ================= PAGE ================= */
+.post-detail-page {
+  padding: 16px 0 32px;
+}
+
+/* ================= BREADCRUMB ================= */
+.post-detail-breadcrumb {
+  max-width: 1200px;
+  margin: 0 auto 12px;
+  padding: 0 16px;
+
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  font-size: 14px;
+  color: #666;
+
+  .crumb {
+    cursor: pointer;
+    transition: 0.2s;
+
+    &:hover {
+      color: #c49a4d;
+    }
+
+    &.active {
+      color: #000;
+      font-weight: 600;
+      
+    }
+     // 👇 thêm cái này
+  &.active:hover {
+    color: #000; // hoặc #333 nếu muốn effect nhẹ
+  }
+  }
+
+  .sep {
+    color: #aaa;
+  }
+}
+
+/* ================= GRID ================= */
+.post-detail-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 20px;
+
+  @media (max-width: 1000px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ================= STATES ================= */
+.post-detail-loading,
+.post-detail-notfound {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+.btn {
+  margin-top: 12px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  background: #fff;
+  cursor: pointer;
+}
+
+/* ================= GALLERY ================= */
+.gallery {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.gallery-main {
+  position: relative;
+  background: #111;
+
+  .main-img {
+    width: 100%;
+    height: 440px;
+    object-fit: cover;
+    display: block;
+
+    @media (max-width: 700px) {
+      height: 280px;
+    }
+  }
+
+  .nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    border-radius: 999px;
+    border: none;
+    background: rgba(0, 0, 0, 0.45);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    &.left {
+      left: 14px;
+    }
+
+    &.right {
+      right: 14px;
+    }
+  }
+
+  .image-count {
+    position: absolute;
+    left: 16px;
+    bottom: 16px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.55);
+    color: #fff;
+    font-size: 12px;
+    display: inline-flex;
+    gap: 6px;
+    align-items: center;
+  }
+}
+
+.gallery-thumbs {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 8px;
+  padding: 12px;
+
+  @media (max-width: 700px) {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  .thumb {
+    border: 2px solid transparent;
+    border-radius: 10px;
+    overflow: hidden;
+    padding: 0;
+    background: none;
+    cursor: pointer;
+
+    img {
+      width: 100%;
+      height: 54px;
+      object-fit: cover;
+      display: block;
+    }
+
+    &.active {
+      border-color: #0063b8;
+    }
+  }
+}
+
+/* ================= META ================= */
+.post-meta {
+  margin-top: 14px;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 14px;
+  padding: 16px;
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #ffe5e9;
+    color: #d6002b;
+    font-weight: 700;
+    padding: 6px 10px;
+    border-radius: 10px;
+    font-size: 12px;
+  }
+
+  .title {
+    margin: 10px 0 10px;
+    font-size: 22px;
+    line-height: 1.25;
+    color: #111;
+  }
+
+  .meta-row {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 10px;
+
+    .price {
+      color: #d6002b;
+      font-weight: 800;
+      font-size: 20px;
+    }
+
+    .area {
+      color: #111;
+      font-weight: 600;
+    }
+
+    .dot {
+      color: #bbb;
+    }
+  }
+
+  .address {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    color: #444;
+    margin-bottom: 14px;
+  }
+
+  .desc {
+    h3 {
+      margin: 0 0 8px;
+      font-size: 16px;
+    }
+
+    p {
+      margin: 0;
+      color: #444;
+      line-height: 1.6;
+      white-space: pre-line;
+    }
+  }
+}
+
+/* ================= SIDE ================= */
+.post-detail-side {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.contact-card,
+.related-card {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.contact-card {
+  .profile {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 12px;
+
+    .avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .name {
+      font-weight: 800;
+      color: #111;
+    }
+
+    .sub {
+      margin-top: 2px;
+      font-size: 12px;
+      color: #666;
+    }
+  }
+
+  .phone {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 12px;
+    background: #18a957;
+    color: #fff;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .hint {
+    margin-top: 12px;
+    padding: 10px 12px;
+    background: #fff7e6;
+    border: 1px solid #ffe2a8;
+    border-radius: 12px;
+    font-size: 13px;
+    color: #6a4b00;
+    line-height: 1.5;
+  }
+}
+
+.related-card {
+  .related-title {
+    font-weight: 800;
+    margin-bottom: 12px;
+  }
+
+  .related-empty {
+    color: #666;
+    font-size: 13px;
+  }
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 900px) {
+  .post-detail-layout {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .map-fixed {
+    width: 100%;
+    height: 300px;
+    position: relative;
+  }
+
+  .post-detail-content {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+}
+
+.post-list {
+  padding: 20px;
+
+  .list-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  .list-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); // 👈 2 cột giống hotpads
+    gap: 16px;
+  }
+
+  .post-card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: 0.2s;
+    border: 1px solid #eee;
+
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    img {
+      width: 100%;
+      height: 140px; // 👈 QUAN TRỌNG (fix ảnh nhỏ lại)
+      object-fit: cover;
+    }
+
+    .info {
+      padding: 10px;
+
+      h4 {
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 6px;
+
+        display: -webkit-box;
+        -webkit-line-clamp: 2; // 👈 giới hạn 2 dòng
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      p {
+        color: #e53935;
+        font-weight: 600;
+        font-size: 14px;
+      }
+
+      span {
+        font-size: 12px;
+        color: #666;
+      }
+    }
+  }
+}
+
+.location-mode {
+  .post-detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .post-detail-side {
+    display: none;
+  }
+
+  .post-detail-main {
+    display: none;
+  }
+
+  .post-list {
+    display: block;
+  }
+}
+.list-mode {
+  .post-detail-grid {
+    grid-template-columns: 1fr; // ✅ full width luôn
+  }
+
+  .post-detail-side {
+    display: none;
+  }
+
+  .post-detail-main {
+    display: none;
+  }
+}
+
+
+// Thanh tìm kiếm 
+.filter-bar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+
+  padding: 12px 16px;
+  margin-bottom: 16px;
+
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+
+  // ===== INPUT & SELECT =====
+  input,
+  select {
+    height: 36px;
+    padding: 0 10px;
+
+    border-radius: 10px;
+    border: 1px solid #ddd;
+
+    font-size: 14px;
+    outline: none;
+
+    transition: all 0.2s ease;
+
+    &:focus {
+      border-color: #ff385c;
+      box-shadow: 0 0 0 2px rgba(255, 56, 92, 0.2);
+    }
+
+    &:hover {
+      border-color: #bbb;
+    }
+  }
+
+  input[type="number"] {
+    width: 100px;
+  }
+
+  select {
+    min-width: 150px;
+    cursor: pointer;
+  }
+
+  // ===== FEATURE TAG (CHECKBOX) =====
+  label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 6px 12px;
+    border-radius: 999px;
+
+    background: #f3f4f6;
+    color: #333;
+
+    font-size: 13px;
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+
+    input {
+      accent-color: #ff385c;
+      cursor: pointer;
+    }
+
+    &:hover {
+      background: #ffe4e8;
+    }
+  }
+
+  // ===== CHECKED STYLE (TAG ACTIVE) =====
+  label:has(input:checked) {
+    background: #ff385c;
+    color: white;
+    font-weight: 500;
+  }
+
+  // ===== RESET BUTTON =====
+  .reset-btn {
+    margin-left: auto;
+
+    padding: 6px 12px;
+    border-radius: 10px;
+    border: none;
+
+    background: #111;
+    color: #fff;
+
+    font-size: 13px;
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: #333;
+    }
+  }
+}
+
+
+.price-dropdown {
+  position: relative;
+
+  .dropdown-btn {
+    padding: 8px 12px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    background: #fff;
+    cursor: pointer;
+
+    &:hover {
+      border-color: #ff385c;
+    }
+  }
+
+  .dropdown-panel {
+    position: absolute;
+    top: 110%;
+    left: 0;
+    width: 260px;
+
+    padding: 14px;
+    border-radius: 12px;
+    background: #fff;
+    border: 1px solid #eee;
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    z-index: 50;
+
+    h4 {
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+  }
+
+  .price-inputs {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 12px;
+
+    input {
+      width: 100%;
+      padding: 6px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+    }
+  }
+.range-sliders {
+  display: flex;
+  flex-direction: column;
+
+  gap: 20px; // 👈 giảm khoảng cách giữa 2 thanh
+  margin-bottom: 16px; // 👈 tăng khoảng cách xuống dưới
+
+  input[type="range"] {
+    width: 100%;
+    height: 4px; // 👈 làm mỏng lại
+    margin: 0; // 👈 bỏ margin mặc định
+
+    accent-color: #ff385c;
+    cursor: pointer;
+  }
+}
+
+  .done-btn {
+    width: 100%;
+    padding: 8px;
+    border-radius: 10px;
+    border: none;
+    background: #ff385c;
+    color: #fff;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+}
+
+.btn-pre-order {
+    width: 100%;
+    padding: 14px;
+    background: #BA8713;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(186, 135, 19, 0.2);
+
+    &:hover {
+      background: #9c700e;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(186, 135, 19, 0.3);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: 480px) {
+  .gallery-main .main-img {
+    height: 220px;
+  }
+
+  .gallery-thumbs {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .post-meta {
+    .title {
+      font-size: 18px;
+      line-height: 1.4;
+    }
+    
+    .meta-row .price {
+      font-size: 18px;
+    }
+  }
+
+  .post-detail-side {
+    gap: 12px;
+  }
+
+  .btn-pre-order, .contact-card .phone {
+    font-size: 14px;
+    padding: 12px;
+  }
+}
+.btn-pre-order:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+

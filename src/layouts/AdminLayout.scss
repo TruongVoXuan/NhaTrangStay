@@ -1,0 +1,56 @@
+.admin-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+
+  .admin-header {
+    flex-shrink: 0;
+  }
+
+  .layout-body {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+
+    .admin-sidebar {
+      width: 280px;
+      flex-shrink: 0;
+      height: 100%;
+    }
+
+    .content-container {
+      flex: 1;
+      padding: 20px;
+      background-color: #ececec;
+      overflow-y: auto;
+      
+      // --- HIỆU ỨNG CUỘN MƯỢT MÀ ---
+      scroll-behavior: smooth;
+
+      // --- TÙY CHỈNH THANH CUỘN (SCROLLBAR) ---
+      &::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: #e0e0e0;
+        border-radius: 10px;
+        border: 2px solid #f9f6f2; // Tạo khoảng đệm để thanh cuộn trông thanh mảnh
+
+        &:hover {
+          background: #d0d0d0;
+        }
+      }
+
+      // Hỗ trợ Firefox
+      scrollbar-width: thin;
+      scrollbar-color: #e0e0e0 transparent;
+    }
+  }
+}

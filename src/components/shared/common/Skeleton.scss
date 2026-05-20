@@ -1,0 +1,18 @@
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e8e8e8 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  
+  // Đổi tên animation cho chuẩn, tăng thời gian lên 2s (hoặc 2.5s) và dùng 'linear' để trượt đều
+  animation: shimmer 2s infinite linear;
+  border-radius: 4px;
+}
+
+@keyframes shimmer {
+  0% {
+    // Rút ngắn quãng đường trượt từ 200% xuống 100% để nó đi chậm và từ tốn hơn
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}

@@ -1,0 +1,133 @@
+.admin-left-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  /* Khối thông tin Avatar */
+  .drop-main-container {
+    display: flex;
+    width: 328px;
+    height: 101px;
+    border: 1px solid #00000040;
+    border-radius: 15px;
+    background-color: #ffffff;
+    justify-content: start;
+
+    .avt-wrapper {
+      .avt-container {
+        background-color: #ffffff;
+        width: auto;
+        height: 100%;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        padding-left: 15px;
+
+        .avt {
+          height: 80%;
+          border-radius: 50%;
+        }
+      }
+    }
+
+    .admin-inf {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 8px;
+      margin-left: 15px;
+      margin-right: 25px;
+
+      p {
+        margin: 0;
+      }
+
+      .role-container {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+
+        .role {
+          font-size: 13.5px;
+          color: #21a3ff;
+        }
+      }
+    }
+  }
+
+  /* Khối menu options */
+  .option-main-container {
+    background-color: #ffffff;
+    width: 328px;
+    border-radius: 15px;
+    height: auto;
+    border: 1px solid #00000040;
+    overflow: hidden; // Đảm bảo các con không tràn ra ngoài góc bo 15px
+
+    /* Style chung cho NavLink */
+    .navlink {
+      text-decoration: none;
+      display: block; // Quan trọng để link bao phủ toàn bộ vùng bấm
+      color: #000000;
+      transition: all 0.2s ease;
+
+      /* KHI ĐƯỜNG DẪN KHỚP (ACTIVE) */
+      &.active {
+        .option-left {
+          background-color: #e1a730;
+          color: #ffffff;
+          
+          /* Nếu muốn các icon lucide-react cũng đổi màu trắng */
+          svg {
+            color: #ffffff !important;
+          }
+        }
+      }
+    }
+
+    /* Thẻ Div chứa nội dung bên trong NavLink hoặc Div click thông thường */
+    .option-left {
+      display: flex;
+      gap: 10px;
+      padding: 15px 22px;
+      cursor: pointer;
+      align-items: center;
+      background-color: transparent; // Để nó dùng màu của container hoặc của .active phía trên
+      
+      p {
+        margin: 0;
+      }
+
+      /* Các class chỉ làm nhiệm vụ BO GÓC - KHÔNG để màu ở đây */
+      &.active-top {
+        border-top-left-radius: 14px;
+        border-top-right-radius: 14px;
+      }
+
+      &.active-bottom {
+        border-bottom-left-radius: 14px;
+        border-bottom-right-radius: 14px;
+      }
+
+      /* Style cho mục quản lý bài đăng có mũi tên (không phải NavLink) */
+      &.drop {
+        display: flex;
+        justify-content: space-between;
+        
+        .left-drop-item {
+          display: flex;
+          gap: 10px;
+          align-items: center;
+        }
+      }
+      
+    }
+
+    /* Danh sách thụt lề khi xổ xuống */
+    .option-left-list-container {
+       .option-left.list {
+          padding-left: 45px;
+       }
+    }
+  }
+}

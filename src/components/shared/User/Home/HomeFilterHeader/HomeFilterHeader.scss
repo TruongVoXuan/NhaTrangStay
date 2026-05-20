@@ -1,0 +1,101 @@
+$primary-blue: #0063B8;
+$brand-gold: #E1A730;
+$shadow: 0 4px 5px rgba(0, 0, 0, 0.1);
+
+.home-filter-header {
+    .main-title {
+        font-size: 28px;
+        font-weight: 700;
+        margin: 2px 0 8px 0;
+    }
+
+    .sub-title {
+        font-size: 16px;
+        font-weight: 400;
+        margin: 0 0 8px 0;
+    }
+
+    .section-label {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    .area-container {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        margin: 10px 0 24px 0;
+
+        .area-item {
+            background-color: #fff;
+            color: $primary-blue;
+            padding: 8px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 160px;
+            box-shadow: $shadow;
+            transition: all 0.3s ease;
+
+            &:hover {
+                transform: translateY(-3px);
+                background-color: $primary-blue;
+                color: #fff;
+            }
+
+            &.active {
+                background-color: $brand-gold;
+                color: #fff;
+                transform: translateY(-3px);
+            }
+
+            b {
+                display: block;
+                font-weight: 700;
+            }
+
+            // Style riêng cho nút "Tất cả"
+            &.all-btn {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 8px;
+                font-weight: 600;
+
+                .all-icon {
+                    stroke-width: 2.5px;
+                }
+            }
+        }
+    }
+
+    .type-selector {
+        display: flex;
+        gap: 25px;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 8px;
+
+        .type-item {
+            font-size: 20px;
+            font-weight: 500;
+            color: #666;
+            cursor: pointer;
+            position: relative;
+            transition: color 0.2s;
+
+            &:hover, &.active {
+                color: $brand-gold;
+            }
+
+            &.active::after {
+                content: "";
+                position: absolute;
+                bottom: -9px;
+                left: 0;
+                width: 100%;
+                height: 3px;
+                background-color: $brand-gold;
+            }
+        }
+    }
+}

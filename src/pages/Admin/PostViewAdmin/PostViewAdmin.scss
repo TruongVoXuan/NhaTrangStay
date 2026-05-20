@@ -1,0 +1,47 @@
+.admin-posts {
+  padding: 20px;
+
+  .page-title {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+
+  .post-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 16px;
+  }
+
+  .post-card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+
+    img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+    }
+
+    .info {
+      padding: 12px;
+
+      h4 {
+        font-size: 16px;
+        margin-bottom: 6px;
+      }
+
+      .price {
+        color: #d4a017;
+        font-weight: 500;
+      }
+
+      .address {
+        font-size: 13px;
+        color: #666;
+      }
+    }
+  }
+}
