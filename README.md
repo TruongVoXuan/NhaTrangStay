@@ -1,74 +1,121 @@
-# Getting Started with Create React App
+# 🏠 NhaTrangStay
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+NhaTrangStay là nền tảng web hỗ trợ tìm kiếm, đăng tin và quản lý phòng trọ tại Nha Trang.
 
-## Available Scripts
+Người dùng có thể:
+- Tìm kiếm phòng trọ theo khu vực
+- Xem bản đồ vị trí phòng
+- Đăng bài cho thuê
+- Chat với AI hỗ trợ tìm phòng
+- Quản lý bài đăng cá nhân
+- Đánh giá và lưu phòng yêu thích
 
-In the project directory, you can run:
+---
 
-### `npm start`
+# 🚀 Công Nghệ Sử Dụng
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Frontend
+- ReactJS
+- SCSS
+- React Router
+- Axios
+- Leaflet Map
+- Lucide React Icons
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Backend
+- Spring Boot
+- Spring Security + JWT
+- MySQL
+- REST API
 
-### `npm test`
+## Khác
+- Supabase Storage
+- Cloudinary
+- OpenAI API
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+# ✨ Chức Năng Chính
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 👤 Người dùng
+- Đăng ký / Đăng nhập
+- Tìm kiếm phòng trọ
+- Xem chi tiết bài đăng
+- Lưu phòng yêu thích
+- Đánh giá phòng
+- Chat AI hỗ trợ tìm phòng
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 🏠 Chủ trọ
+- Đăng bài cho thuê
+- Upload nhiều ảnh
+- Quản lý bài đăng
+- Gia hạn bài đăng
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 🛡️ Admin
+- Duyệt bài đăng
+- Từ chối bài đăng
+- Khóa / mở khóa bài đăng
+- Quản lý người dùng
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+# 🗺️ Tính Năng Bản Đồ
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Hiển thị vị trí phòng trên bản đồ
+- Tìm phòng theo khu vực
+- Marker phân loại theo loại phòng
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+---
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+# 🤖 AI Assistant
 
-## Learn More
+Hệ thống tích hợp AI hỗ trợ:
+- Gợi ý phòng phù hợp
+- Tìm phòng theo ngân sách
+- Tư vấn khu vực tại Nha Trang
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+# 📸 Demo Giao Diện
 
-### Code Splitting
+## Trang chủ
+![Home](./demo/home.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Chi tiết phòng
+![Detail](./demo/detail.png)
 
-### Analyzing the Bundle Size
+## AI Chatbot
+![AI](./demo/chatbot.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+---
 
-### Making a Progressive Web App
+# ⚙️ Cài Đặt Dự Án
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```bash
+git clone https://github.com/your-username/NhaTrangStay.git
+```
 
-### Advanced Configuration
+```bash
+cd NhaTrangStay
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+```bash
+npm install
+```
 
-### Deployment
+```bash
+npm start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+---
 
-### `npm run build` fails to minify
+# 📌 Mục Tiêu Đề Tài
 
-# This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Xây dựng hệ thống hỗ trợ tìm kiếm và quản lý phòng trọ tại Nha Trang với trải nghiệm hiện đại, tích hợp AI và bản đồ trực quan.
 
-# NhaTrangStay
+---
 
-graduation thesis for 2026
+# 👨‍💻 Tác Giả
+
+- TruongTN
+- Đồ án tốt nghiệp 2026
