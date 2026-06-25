@@ -58,7 +58,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         user.setRole(Role.USER);
 
         userRepository.save(user);
-        System.out.println("✅ ĐÃ LƯU USER GOOGLE MỚI: " + email);
+        System.out.println(" ĐÃ LƯU USER GOOGLE MỚI: " + email);
         return user;
     }
 }

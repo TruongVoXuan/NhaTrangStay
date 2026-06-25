@@ -4,13 +4,21 @@ import com.truongvx64cntt.nhatrangstay.dto.*;
 import com.truongvx64cntt.nhatrangstay.service.AuthService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-
+import com.truongvx64cntt.nhatrangstay.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
+import org.springframework.http.MediaType;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -20,9 +28,10 @@ import java.util.Map;
 public class AuthController {
 
     private final AuthService authService;
+    private final UserService userService;
 
     // =========================
-    // 1️⃣ SIGNUP (ĐĂNG KÝ)
+    // SIGNUP (ĐĂNG KÝ)
     // =========================
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody SignupRequest request) {
@@ -38,7 +47,7 @@ public class AuthController {
     }
 
     // =========================
-    // 2️⃣ VERIFY EMAIL (XÁC THỰC)
+    // VERIFY EMAIL (XÁC THỰC)
     // =========================
     @GetMapping("/verify")
     public ResponseEntity<?> verify(@RequestParam String token) {
@@ -52,7 +61,7 @@ public class AuthController {
     }
 
     // =========================
-    // 3️⃣ LOGIN (ĐĂNG NHẬP) - PHẦN VỪA ĐƯỢC BỔ SUNG
+    // LOGIN (ĐĂNG NHẬP) - PHẦN VỪA ĐƯỢC BỔ SUNG
     // =========================
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
@@ -60,7 +69,31 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 
-    // 4️⃣ FORGOT PASSWORD (QUÊN MẬT KHẨU)
+    @GetMapping("/profile")
+    public ResponseEntity<?> getUserInfo() {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        String email = authentication.getName();
+
+        UserResponse response = userService.getUserInfoByEmail(email);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/profile")
+    public ResponseEntity<?> updateProfile(@RequestBody UserRequest request) {
+        String message = userService.updateProfile(
+                request.getUsername(),
+                request.getEmail(),
+                request.getPhone(),
+                request.getAvatar() // giờ là STRING URL
+        );
+
+        return ResponseEntity.ok(message);
+    }
+
+    // 4 FORGOT PASSWORD (QUÊN MẬT KHẨU)
     @PostMapping("/forgot-password")
     public ResponseEntity<?> requestPasswordReset(@RequestBody ForgotPasswordRequest request) {
         // Check email và tạo otp
@@ -81,7 +114,7 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 
-    // 4️⃣.2 Change Password (QUÊN MẬT KHẨU)
+    // 4️2 Change Password (QUÊN MẬT KHẨU)
     @PostMapping("/change-password")
     public ResponseEntity<?> changePassword(@RequestBody ChangePasswordRequest request) {
         if (!request.getComfirmPassword().equals(request.getNewPassword())) {
@@ -93,4 +126,5 @@ public class AuthController {
 
         return ResponseEntity.ok(changePassword);
     }
+
 }

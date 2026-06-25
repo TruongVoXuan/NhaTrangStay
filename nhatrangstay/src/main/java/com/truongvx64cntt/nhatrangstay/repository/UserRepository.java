@@ -1,11 +1,14 @@
 package com.truongvx64cntt.nhatrangstay.repository;
 
+import com.truongvx64cntt.nhatrangstay.entity.Post;
 import com.truongvx64cntt.nhatrangstay.entity.User;
+import com.truongvx64cntt.nhatrangstay.enums.PostStatus;
 import com.truongvx64cntt.nhatrangstay.enums.Provider;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
+import java.util.List;
 import java.util.Optional;
+import com.truongvx64cntt.nhatrangstay.enums.Role;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -30,4 +33,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     boolean existsByPhone(String phone);
 
     boolean existsByUsernameAndEmail(String username, String email);
+
+    List<User> findByRoleNot(Role role);
+
 }

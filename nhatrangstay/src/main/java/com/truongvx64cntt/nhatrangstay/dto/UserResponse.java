@@ -17,7 +17,10 @@ public class UserResponse {
     private String username;
     private String email;
     private String phone;
+    private String avatar;
     private Provider provider;
     private UserStatus status;
     private Role role;
+
+    private int postCount;
 }

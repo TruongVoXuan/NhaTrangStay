@@ -24,7 +24,7 @@ public class PasswordReset {
 
     private boolean verified;
 
-    // 1️⃣ Khóa ngoại
+    // Khóa ngoại
     @OneToOne
     private User user;
 

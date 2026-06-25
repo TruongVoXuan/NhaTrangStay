@@ -94,6 +94,7 @@ public class AuthService {
         }
 
         String token = jwtService.generateToken(
+                user.getId(),
                 user.getEmail(),
                 user.getUsername(),
                 user.getRole().name());
@@ -196,11 +197,11 @@ public class AuthService {
         String passwordHash = passwordEncoder.encode(request.getNewPassword());
         user.setPassword(passwordHash);
 
-        // 🔥 Ngắt liên kết trước khi xóa PasswordReset
+        // Ngắt liên kết trước khi xóa PasswordReset
         user.setPasswordReset(null);
         userRepository.save(user);
 
-        // 🔥 Sau đó mới delete PasswordReset
+        // Sau đó mới delete PasswordReset
         passwordResetRepository.delete(passwordReset);
 
         return "Đổi mật khẩu thành công";

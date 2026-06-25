@@ -8,4 +8,6 @@ public interface EmailSender {
 
     void confirmEmailChangeOtp(String email, String otp);
 
+    void sendEmail(String to, String subject, String body);
+
 }

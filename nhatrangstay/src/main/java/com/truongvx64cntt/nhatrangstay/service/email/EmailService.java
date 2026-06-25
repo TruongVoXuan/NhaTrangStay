@@ -17,6 +17,24 @@ public class EmailService implements EmailSender {
     }
 
     @Override
+    public void sendEmail(String to, String subject, String body) {
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+
+            helper.setTo(to);
+            helper.setSubject(subject);
+            helper.setText(body, false); // false = plain text
+
+            mailSender.send(message);
+            System.out.println("Sent email to: " + to);
+
+        } catch (MessagingException e) {
+            throw new RuntimeException("Gửi email thất bại", e);
+        }
+    }
+
+    @Override
     public void sendVerificationEmail(String email, String token) {
 
         String link = "http://localhost:8080/api/auth/verify?token=" + token;
@@ -96,7 +114,7 @@ public class EmailService implements EmailSender {
     @Override
     public void sendOtpEmail(String email, String resetToken) {
 
-        String link = "http://localhost:8080/api/auth/verify-resettoken-mail?resetToken=" + resetToken;
+        String link = "http://localhost:3000/reset-password?resetToken=" + resetToken;
 
         String htmlContent = """
                     <div style="font-family: Arial, sans-serif; padding: 20px;">

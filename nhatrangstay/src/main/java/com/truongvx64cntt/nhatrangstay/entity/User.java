@@ -33,6 +33,9 @@ public class User {
 
     private String phone;
 
+    @Column(name = "avatar")
+    private String avatar;
+
     @Enumerated(EnumType.STRING)
     private Provider provider;
 
@@ -48,4 +51,5 @@ public class User {
 
     @OneToOne(mappedBy = "user")
     private PasswordReset passwordReset;
+
 }

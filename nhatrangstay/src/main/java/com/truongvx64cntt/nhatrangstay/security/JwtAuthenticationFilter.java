@@ -9,7 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import com.truongvx64cntt.nhatrangstay.entity.User;
 import com.truongvx64cntt.nhatrangstay.repository.UserRepository;
 import com.truongvx64cntt.nhatrangstay.service.JwtService;
@@ -34,6 +34,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             HttpServletResponse response,
             FilterChain filterChain)
             throws ServletException, IOException {
+        // BYPASS SWAGGER
+
+        String path = request.getRequestURI();
+
+        // BYPASS SWAGGER
+        if (path.contains("/swagger-ui")
+                || path.contains("/v3/api-docs")) {
+
+            filterChain.doFilter(request, response);
+            return;
+        }
 
         String header = request.getHeader("Authorization");
 
@@ -46,24 +57,42 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 System.out.println("Token: " + token);
 
                 String email = jwtService.extractEmail(token);
+
+                // FIX 1: email null => CHẶN LUÔN
+                if (email == null) {
+                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    return;
+                }
+
                 System.out.println("Email from token: " + email);
 
                 User user = userRepository.findByEmail(email).orElse(null);
-                System.out.println("User found: " + user);
 
-                if (user != null) {
-                    UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
-                            user.getEmail(),
-                            null,
-                            List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole().name())));
-
-                    SecurityContextHolder.getContext().setAuthentication(auth);
-                } else {
-                    System.out.println("❌ USER NOT FOUND");
+                // FIX 2: user null => CHẶN LUÔN
+                if (user == null) {
+                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    return;
                 }
 
+                UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
+                        user.getEmail(),
+                        null,
+                        List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole().name())));
+
+                auth.setDetails(
+                        new WebAuthenticationDetailsSource().buildDetails(request));
+
+                SecurityContextHolder.getContext().setAuthentication(auth);
+
+                System.out.println("Authorities: " +
+                        SecurityContextHolder.getContext().getAuthentication().getAuthorities());
+
             } catch (Exception e) {
+
+                // FIX 3: lỗi token => CHẶN LUÔN
                 System.out.println("JWT ERROR: " + e.getMessage());
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                return;
             }
         }
 

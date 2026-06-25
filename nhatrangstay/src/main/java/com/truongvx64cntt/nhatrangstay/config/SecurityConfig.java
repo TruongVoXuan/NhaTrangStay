@@ -6,11 +6,11 @@ import com.truongvx64cntt.nhatrangstay.entity.User;
 import com.truongvx64cntt.nhatrangstay.security.JwtAuthenticationFilter;
 import com.truongvx64cntt.nhatrangstay.service.CustomOAuth2UserService;
 import com.truongvx64cntt.nhatrangstay.service.JwtService;
-import jakarta.servlet.http.HttpServletResponse; // 🔥 Import quan trọng
+import jakarta.servlet.http.HttpServletResponse;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import static org.springframework.security.config.Customizer.withDefaults;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -23,89 +23,151 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import static org.springframework.security.config.Customizer.withDefaults;
+import org.springframework.web.client.RestTemplate;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfig {
 
-    private final CustomOAuth2UserService customOAuth2UserService;
-    private final JwtAuthenticationFilter jwtAuthenticationFilter;
-    private final JwtService jwtService;
+        private final CustomOAuth2UserService customOAuth2UserService;
+        private final JwtAuthenticationFilter jwtAuthenticationFilter;
+        private final JwtService jwtService;
 
-    public SecurityConfig(CustomOAuth2UserService customOAuth2UserService,
-            JwtAuthenticationFilter jwtAuthenticationFilter,
-            JwtService jwtService) {
-        this.customOAuth2UserService = customOAuth2UserService;
-        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
-        this.jwtService = jwtService;
-    }
+        public SecurityConfig(
+                        CustomOAuth2UserService customOAuth2UserService,
+                        JwtAuthenticationFilter jwtAuthenticationFilter,
+                        JwtService jwtService) {
+                this.customOAuth2UserService = customOAuth2UserService;
+                this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+                this.jwtService = jwtService;
+        }
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf(csrf -> csrf.disable())
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        @Bean
+        public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-                // 🔥 PHẦN SỬA LỖI: Trả về 403 thay vì redirect 302
-                .exceptionHandling(exception -> exception
-                        .authenticationEntryPoint((request, response, authException) -> {
-                            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-                            response.getWriter().write("Access Denied: Please login first.");
-                        }))
+                http
+                                // CSRF disable cho API
+                                .csrf(csrf -> csrf.disable())
 
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers(
-                                "/", "/home", "/login/**", "/oauth2/**",
-                                "/api/auth/**", "/swagger-ui/**", "/v3/api-docs/**",
-                                "/swagger-ui.html", "/h2-console/**", "/api/test/**", "/api/posts/**",
-                                "/api/home/**")
-                        .permitAll()
-                        .anyRequest().authenticated())
+                                // CORS
+                                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
 
-                .addFilterBefore(jwtAuthenticationFilter,
-                        UsernamePasswordAuthenticationFilter.class)
+                                // Stateless JWT
+                                .sessionManagement(session -> session
+                                                .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
-                .oauth2Login(oauth2 -> oauth2
-                        .userInfoEndpoint(withDefaults())
-                        .successHandler((request, response, authentication) -> {
+                                // Fix lỗi 403 redirect login
+                                .exceptionHandling(exception -> exception
+                                                .authenticationEntryPoint((request, response, authException) -> {
+                                                        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                                                        response.getWriter()
+                                                                        .write("Access Denied: Please login first.");
+                                                }))
 
-                            OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
+                                // AUTH RULES (QUAN TRỌNG)
+                                .authorizeHttpRequests(auth -> auth
 
-                            String registrationId = ((OAuth2AuthenticationToken) authentication)
-                                    .getAuthorizedClientRegistrationId();
+                                                // OPTIONS
+                                                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                                                .requestMatchers(HttpMethod.PUT, "/api/posts/*/lock")
+                                                .hasAuthority("ROLE_ADMIN")
+                                                .requestMatchers(HttpMethod.PUT, "/api/posts/*/unlock")
+                                                .hasAuthority("ROLE_ADMIN")
 
-                            User user = customOAuth2UserService.processOAuth2User(oAuth2User, registrationId);
+                                                // PUBLIC APIs
+                                                .requestMatchers(
+                                                                "/",
+                                                                "/home",
+                                                                "/login/**",
+                                                                "/oauth2/**",
+                                                                "/swagger-ui/**",
+                                                                "/v3/api-docs/**",
+                                                                "/swagger-ui.html",
+                                                                "/h2-console/**",
+                                                                "/api/test/**",
+                                                                "/api/reviews/post/**",
+                                                                "/api/posts/**",
+                                                                "/api/reviews/**",
+                                                                "/api/home/**")
+                                                .permitAll()
 
-                            String token = jwtService.generateToken(
-                                    user.getEmail(),
-                                    user.getUsername(),
-                                    user.getRole().name());
+                                                .requestMatchers(HttpMethod.PUT, "/api/users/change-password")
+                                                .authenticated()
 
-                            response.setContentType("application/json");
-                            response.getWriter().write("{\"token\":\"" + token + "\"}");
-                        }))
-                .headers(headers -> headers.frameOptions(frame -> frame.disable()));
+                                                // PROFILE (BẮT BUỘC LOGIN)
+                                                .requestMatchers("/api/auth/profile").authenticated()
+                                                .requestMatchers("/api/rental-procedures/**").authenticated()
+                                                // ALL OTHER AUTH ROUTES PUBLIC (login, signup...)
+                                                .requestMatchers("/api/auth/**").permitAll()
 
-        return http.build();
-    }
+                                                .anyRequest().authenticated())
 
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true);
-        config.setAllowedOriginPatterns(List.of("*"));
-        config.setAllowedHeaders(List.of("*"));
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+                                // JWT FILTER
+                                .addFilterBefore(jwtAuthenticationFilter,
+                                                UsernamePasswordAuthenticationFilter.class)
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", config);
-        return source;
-    }
+                                // OAUTH GOOGLE LOGIN
+                                .oauth2Login(oauth2 -> oauth2
+                                                .userInfoEndpoint(withDefaults())
+                                                .successHandler((request, response, authentication) -> {
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+                                                        OAuth2User oAuth2User = (OAuth2User) authentication
+                                                                        .getPrincipal();
+
+                                                        String registrationId = ((OAuth2AuthenticationToken) authentication)
+                                                                        .getAuthorizedClientRegistrationId();
+
+                                                        User user = customOAuth2UserService
+                                                                        .processOAuth2User(oAuth2User, registrationId);
+
+                                                        String token = jwtService.generateToken(
+                                                                        user.getId(),
+                                                                        user.getEmail(),
+                                                                        user.getUsername(),
+                                                                        user.getRole().name());
+
+                                                        String redirectUrl = "http://localhost:3000/login/oauth2/code/google?token="
+                                                                        + token;
+
+                                                        response.sendRedirect(redirectUrl);
+                                                }))
+
+                                // H2 CONSOLE FIX
+                                .headers(headers -> headers.frameOptions(frame -> frame.disable()));
+
+                return http.build();
+        }
+
+        // ================= CORS =================
+        @Bean
+        public CorsConfigurationSource corsConfigurationSource() {
+
+                CorsConfiguration config = new CorsConfiguration();
+
+                config.setAllowCredentials(true);
+                config.setAllowedOriginPatterns(List.of("*"));
+                config.setAllowedHeaders(List.of("*"));
+                config.setAllowedMethods(List.of(
+                                "GET", "POST", "PUT", "DELETE", "OPTIONS"));
+
+                UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+                source.registerCorsConfiguration("/**", config);
+
+                return source;
+        }
+
+        // ================= PASSWORD =================
+        @Bean
+        public PasswordEncoder passwordEncoder() {
+                return new BCryptPasswordEncoder();
+        }
+
+        @Bean
+        public RestTemplate restTemplate() {
+                return new RestTemplate();
+        }
+
 }

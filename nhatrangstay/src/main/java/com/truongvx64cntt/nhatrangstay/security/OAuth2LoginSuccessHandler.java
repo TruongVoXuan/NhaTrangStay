@@ -38,8 +38,8 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
         // 3. Mặc định cấp quyền "USER" cho người đăng nhập bằng Google
         String role = "USER";
 
-        // 🔥 Đã sửa lỗi: Truyền đầy đủ 3 tham số (email, username, role)
-        String token = jwtService.generateToken(email, name, role);
+        // Đã sửa lỗi: Truyền đầy đủ 4 tham số (id, email, username, role)
+        String token = jwtService.generateToken(null, email, name, role);
 
         String redirectUrl = "http://localhost:3000/login/oauth2/code/google?token=" + token;
         response.sendRedirect(redirectUrl);

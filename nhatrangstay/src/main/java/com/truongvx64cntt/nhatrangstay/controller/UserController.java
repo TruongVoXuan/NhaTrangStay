@@ -5,11 +5,17 @@ import com.truongvx64cntt.nhatrangstay.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.Map;
+import com.truongvx64cntt.nhatrangstay.service.sms.SmsService;
 
 @RestController
 @RequestMapping("/api/user")
+@Tag(name = "OTP API", description = "OTP")
 @RequiredArgsConstructor
 public class UserController {
+
+    private final SmsService service;
 
     private final UserService userService;
 
@@ -19,8 +25,8 @@ public class UserController {
         String phoneOtp;
         String emailOtp;
 
-        boolean hasEmail = request.getNewEmail() != null && !request.getNewEmail().isBlank();
-        boolean hasPhone = request.getNewPhone() != null && !request.getNewPhone().isBlank();
+        boolean hasEmail = request.getEmail() != null && !request.getEmail().isBlank();
+        boolean hasPhone = request.getPhone() != null && !request.getPhone().isBlank();
 
         /* cả 2 đều rỗng */
         if (!hasEmail && !hasPhone) {
@@ -36,7 +42,9 @@ public class UserController {
         /* chỉ có email */
         if (!hasPhone) {
             emailOtp = this.userService.generateEmailOtp(request);
-            return ResponseEntity.ok(emailOtp);
+            return ResponseEntity.ok(Map.of(
+                    "status", 200,
+                    "message", emailOtp));
         }
 
         /* có cả 2 */
