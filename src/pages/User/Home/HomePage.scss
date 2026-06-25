@@ -1,0 +1,87 @@
+.home-page {
+    min-height: 100vh;
+    background-color: #f1eeee; 
+    padding: 20px 100px; // Padding cho màn hình lớn
+    display: flex;
+    justify-content: center;
+
+    .main-content {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 22px;
+        max-width: 1440px;
+
+        .left-content {
+            flex: 4; // Tỉ lệ cột trái
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            
+            .view-room-list {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+
+                .loading-state,
+                .error-state,
+                .empty-state {
+                    background-color: #fff;
+                    padding: 40px 20px;
+                    border-radius: 10px;
+                    text-align: center;
+                    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+                    p {
+                        font-size: 18px;
+                        color: #666;
+                        margin: 0;
+                    }
+                }
+
+                .loading-state p {
+                    color: #0063B8;
+                }
+
+                .error-state p {
+                    color: #dc3545;
+                }
+
+                .empty-state p {
+                    color: #6c757d;
+                }
+            }
+        }
+
+        .right-content {
+            flex: 1; // Tỉ lệ cột phải
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .bottom-wrapper {
+            flex-basis: 100%; // Ép phần dịch vụ xuống dưới cùng
+            margin-top: 30px;
+        }
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .home-page { padding: 20px 40px; }
+}
+
+@media screen and (max-width: 768px) {
+    .home-page {
+        padding: 15px;
+        .newshow-demo-main {
+            flex-direction: column; // Chuyển thành 1 cột trên mobile
+            .left-content, .right-content {
+                width: 100%;
+                max-width: none;
+            }
+        }
+    }
+}

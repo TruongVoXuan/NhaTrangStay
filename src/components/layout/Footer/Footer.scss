@@ -1,0 +1,160 @@
+$footer-bg: #ffd6ba;
+$text-white: #ffffff;
+$text-soft: rgba(255, 255, 255, 0.85);
+
+.footer-container {
+  background: linear-gradient(180deg, #ffd6ba 0%, #fcbf9f 100%);
+  width: 100%;
+  min-height: 606px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== TOP ===== */
+.top-container {
+  display: grid;
+  grid-template-columns: 3fr 1fr 2fr 2fr;
+  padding: 60px 80px 40px;
+  gap: 40px;
+}
+
+/* ===== LINE ===== */
+hr {
+  width: 90%;
+  margin: 0 auto;
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+/* ===== LEFT ===== */
+.left-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.logo-footer {
+  width: 220px;
+  margin-left: 0;
+}
+
+.address,
+.hotline {
+  color: $text-soft;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.address-container,
+.hotline-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+
+  svg {
+    min-width: 18px;
+  }
+}
+
+/* ===== MIDDLE ===== */
+.middle-main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 30px;
+  color: $text-white;
+}
+
+.middle-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  p {
+    margin: 0;
+    font-size: 14px;
+    color: $text-soft;
+    cursor: pointer;
+    transition: all 0.25s ease;
+
+    &:hover {
+      color: white;
+      transform: translateX(3px);
+    }
+  }
+}
+
+.middle-container-top {
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+/* ===== LOGO ===== */
+.middle-logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 220px;
+}
+
+/* ===== DOWNLOAD ===== */
+.download-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 60px;
+
+  img {
+    width: 140px;
+    cursor: pointer;
+    transition: transform 0.25s ease;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+}
+
+/* ===== CONTENT ===== */
+.content-container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* ===== BOTTOM ===== */
+.bottom-footer-container {
+  color: $text-soft;
+  padding: 20px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  text-align: center;
+}
+
+.bottom-footer {
+  margin: 0;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .top-container {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .top-container {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .download-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}

@@ -1,0 +1,289 @@
+$primary: #f3a638;
+$bg: #f5f6f8;
+$border: #e5e5e5;
+$text: #333;
+$dark-blue: #0d1b2a;
+
+.post-page {
+  background: $bg;
+  // padding: 40px 0;
+  font-family: "Segoe UI", sans-serif;
+
+  .container {
+    width: 1100px;
+    margin: auto;
+  }
+
+  .page-title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 5px;
+  }
+
+  .page-subtitle {
+    color: #777;
+    margin-bottom: 25px;
+  }
+
+  .row {
+    display: flex;
+    gap: 20px;
+  }
+
+  .two-cols > * {
+    flex: 1;
+  }
+
+  .card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+  }
+
+  .card-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+
+    label {
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+
+    input,
+    select,
+    textarea {
+      padding: 10px;
+      border: 1px solid $border;
+      border-radius: 6px;
+      font-size: 14px;
+
+      &:focus {
+        outline: none;
+        border-color: $primary;
+      }
+    }
+  }
+
+  .note-box {
+    background: #fff7e6;
+    border: 1px solid $primary;
+    padding: 20px;
+    border-radius: 10px;
+    height: fit-content;
+
+    h3 {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    ul {
+      padding-left: 18px;
+      color: #555;
+    }
+  }
+
+  .support-box {
+  background: $dark-blue;
+  color: #fff;
+  border-radius: 15px;
+  padding: 30px;
+  height: fit-content;
+ 
+  h2 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: $primary;
+  }
+ 
+  .notice-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: left;
+ 
+    li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: #e2e8f0;
+    }
+  }
+ 
+  .notice-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    font-size: 12.5px;
+    color: $primary;
+    text-align: center;
+  }
+}
+
+  .upload-box {
+    border: 2px dashed $border;
+    border-radius: 12px;
+    padding: 60px;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.3s;
+
+    &:hover {
+      border-color: $primary;
+    }
+
+    .upload-icon {
+      font-size: 30px;
+      color: $primary;
+      margin-bottom: auto;
+    }
+
+    span {
+      color: #888;
+      font-size: 13px;
+    }
+  }
+
+  .upload-note {
+    margin-top: 10px;
+    font-size: 13px;
+    color: #777;
+  }
+
+  .submit-btn {
+    width: 100%;
+    padding: 14px;
+    background: $primary;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+}
+
+.short-input input {
+  max-width: 475px;
+}
+
+
+.address-detail {
+  textarea {
+    width: 95%;
+  padding: 10px;
+  resize: none;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+  }
+}
+
+.short-input1 input {
+  max-width: 1023px;
+}
+
+.short-input2 textarea {
+  max-width: 1023px;
+}
+
+.form-group.label-sophong {
+  margin-left: 10px;
+  width: fit-content;
+}
+
+.image-preview {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
+.preview-item {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.preview-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.remove-btn {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: red;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.upload-box {
+  border: 2px dashed #ccc;
+  padding: 30px;
+  text-align: center;
+  border-radius: 12px;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.upload-box.dragging {
+  border-color: #f3a638;
+  background: #fff6e9;
+  transform: scale(1.02);
+}
+.info-base__map {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.map-placeholder {
+  width: 100%;
+  height: 400px;
+  background: #e0e0e0;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #777;
+} 

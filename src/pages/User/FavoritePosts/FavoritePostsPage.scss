@@ -1,0 +1,157 @@
+$primary: #e1a730;
+$danger: #8c161f;
+$text-main: #333;
+$text-sub: #666;
+$border: #e0e0e0;
+
+.favorite-page-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+
+  .main-content {
+    flex: 1;
+
+    .page-header {
+      margin-bottom: 30px;
+      .breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 14px;
+        color: $text-sub;
+        margin-bottom: 15px;
+
+        .home-link {
+          transition: color 0.2s;
+          &:hover { color: $primary; font-weight: bold;}
+        }
+        b { color: $text-main; }
+      }
+      h1 {
+        font-size: 30px;
+        font-weight: 800;
+        color: $text-main;
+        margin-bottom: 8px;
+        letter-spacing: -0.5px;
+      }
+      p { color: $text-sub; }
+    }
+
+    .room-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 60px 20px;
+      color: $text-sub;
+      font-size: 16px;
+    }
+
+    .pagination {
+      margin-top: 48px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+
+      button {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        border: 1px solid $border;
+        background: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.2s;
+
+        &:hover:not(:disabled) {
+          border-color: $primary;
+          color: $primary;
+        }
+        &:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+        }
+      }
+      .page-info {
+        font-weight: bold;
+        color: $text-main;
+      }
+    }
+  }
+
+  @media (max-width: 992px) {
+    flex-direction: column;
+  }
+}
+
+/* =========================================
+  RESPONSIVE: DESKTOP, TABLET, MOBILE
+   ========================================= */
+@media screen and (max-width: 1200px) {
+  .favorite-page-container {
+    padding: 30px 20px;
+    gap: 20px; // Thu hẹp khoảng cách giữa Sidebar và Main Content
+
+    .main-content {
+      .room-grid {
+        gap: 16px; 
+        // Bóp nhẹ card lại để vẫn giữ được 3 cột trên laptop
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); 
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .favorite-page-container {
+    flex-direction: column;
+    padding: 30px 24px;
+    gap: 24px;
+
+    .main-content {
+      width: 100%;
+      order: 2;
+
+      .page-header h1 {
+        font-size: 26px;
+      }
+
+      .room-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .favorite-page-container {
+    padding: 20px 16px;
+
+    .main-content {
+      .page-header {
+        margin-bottom: 20px;
+        h1 { font-size: 22px; }
+      }
+
+      .room-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .pagination {
+        margin-top: 30px;
+      }
+    }
+  }
+}

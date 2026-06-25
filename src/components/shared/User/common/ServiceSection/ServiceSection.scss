@@ -1,0 +1,107 @@
+.bottom-content {
+    display: flex;
+    flex-basis: 100%;
+    text-align: center;
+    justify-content: center;
+    background-color: #F8F8F8;
+    flex-direction: column;
+    border-radius: 10px;
+    width: 100%;
+    box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.1);
+    padding: 2rem 6rem;
+}
+
+.why-title, .cost, .ask {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 16px;
+}
+
+.why-content, .sub-content, .find {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: #000;
+    margin-bottom: 16px;
+}
+
+.info-card {
+    display: flex;
+    gap: 20px;
+    justify-content: space-evenly;
+}
+
+.info-card-item {
+    background-color: #F8F8F8;
+    border-radius: 10px;
+    box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 16px;
+    padding: 1rem;
+    width: 200px;
+}
+
+.info-title {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: #000;
+    margin: 0 0 8px 0;
+}
+
+.rating {
+    gap: 4px;
+    color: #E1A730;
+    margin-bottom: 16px;
+}
+
+.rating svg {
+    fill: #E1A730;
+    width: 2rem;
+    height: 2rem;
+}
+
+.contact {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    color: #979797;
+    margin-bottom: 16px;
+}
+
+.post-now-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: #E1A730;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 10px;
+    width: fit-content;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    outline: none;
+    font-family: inherit;
+
+    &:hover {
+        background-color: #C17A1B;
+        transform: scale(1.05);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        transition: all 0.4s ease;
+    }
+
+    &:active {
+        transform: scale(0.98);
+        transition: all 0.1s ease;
+    }
+}
+
+.post-now {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+}

@@ -1,0 +1,30 @@
+.button-logout:hover {
+  box-shadow: 1px 1px 15px #00000040;
+  transform: translate(0, -3px);
+  transform: scale(1.07);
+}
+
+.button-logout {
+  transition: 500ms;
+  cursor: pointer;
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.modal-animation {
+  animation: bounceIn 0.6s ease-out forwards;
+}

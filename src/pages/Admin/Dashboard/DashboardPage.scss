@@ -1,0 +1,140 @@
+$bg-page: #F9F6F2;
+$white: #ffffff;
+$text-main: #1A1A1A;
+$text-muted: #888888;
+$green-organic: #586B54;
+$gray-light: #F0F0F0;
+$radius-lg: 24px;
+$shadow-soft: 0 10px 40px rgba(0, 0, 0, 0.03);
+
+.dashboard-page {
+  height: 878.86px;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  // padding: 20px;
+  // background-color: $bg-page;
+  font-family: Arial, Helvetica, sans-serif;
+
+  .middle-grid, .bottom-grid {
+    display: grid;
+    grid-template-columns: 2.2fr 1fr;
+    gap: 16px;
+  }
+
+  .card {
+    background: $white;
+    border-radius: $radius-lg;
+    padding: 16px;
+    box-shadow: $shadow-soft;
+    border: none;
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      h3 {
+        font-size: 18px;
+        font-weight: 700;
+        color: $text-main;
+        margin: 0;
+      }
+
+      .period-select, .view-all {
+        background: $gray-light;
+        border: none;
+        padding: 6px 14px;
+        border-radius: 10px;
+        font-size: 13px;
+        color: $text-muted;
+        cursor: pointer;
+      }
+
+      .chart-legend {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        color: $text-muted;
+        .dot {
+          width: 8px;
+          height: 8px;
+          background: $green-organic;
+          border-radius: 50%;
+        }
+      }
+    }
+  }
+
+  .modern-table {
+    width: 100%;
+    border-collapse: collapse;
+    th {
+      text-align: left;
+      padding: 12px 10px;
+      color: $text-muted;
+      font-size: 13px;
+      border-bottom: 1px solid $gray-light;
+    }
+    td {
+      padding: 16px 10px;
+      border-bottom: 1px solid $gray-light;
+      font-size: 14px;
+      vertical-align: middle;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+
+      .ava {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: $gray-light;
+      }
+    }
+
+    .badge.success {
+      background: #E9F0E8;
+      color: $green-organic;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    
+    .actions {
+      display: flex;
+      gap: 10px;
+      color: #ccc;
+      cursor: pointer;
+      svg:hover {
+        color: $text-main;
+      } 
+    }
+  }
+}
+
+@keyframes sweep { from { width: 0%; } to { width: 100%; } }
+#sweep-rect { animation: sweep 1s linear forwards; }
+
+.ava {
+  width: 38px;
+  height: 38px;
+  
+  border-radius: 50%;
+  object-fit: cover;
+}
+.user1-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  position: relative;
+  top: -2px;
+}
