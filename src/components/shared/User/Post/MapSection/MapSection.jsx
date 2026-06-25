@@ -227,7 +227,7 @@ function GOOGLE({
     if (marker) {
       marker.openPopup();
     }
-  }, 200); //  delay 1 xíu là ăn ngay
+  }, 200); //  delay 1 xíu để chắc marker đã render
 
   return () => clearTimeout(timer);
 }, [currentPostId, markers]);
@@ -401,12 +401,13 @@ function GOOGLE({
 
 
 
-
+{/* MỞ POPUP KHI CLICK VÀO BÀI ĐĂNG TỪ NGOÀI (VD: DANH SÁCH BÀI VIẾT) */}
+{/* hiển thị bài market tương tưng với id được gửi vào từ props (currentPostId) */}
 {markers.map((m) => (
   <Marker
     key={m.id}
-    position={[m.lat, m.lng]}
-    icon={getMarkerIcon(m.type)}
+    position={[m.lat, m.lng]} // <--- ĐÂY! Nhận tọa độ lat/lng và vẽ Marker
+    icon={getMarkerIcon(m.type)} // Set icon theo loại phòng
 
     //  GẮN REF THEO ID
     ref={(ref) => {

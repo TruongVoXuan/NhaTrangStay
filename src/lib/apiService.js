@@ -70,7 +70,7 @@ export const postAPI = {
    * Thực tế BE thường expect filter được "flatten" thành query params
    * (keyword, minPrice, maxPrice, ...) thay vì searchRequest=<json>
    */
-  search: (searchRequest = {}, page = 0, size = 10, sort = "id,desc") =>
+  search: (searchRequest = {}, page = 0, size = 100, sort = "id,desc") =>
     api.get("/api/posts/search", {
       params: {
         ...searchRequest,

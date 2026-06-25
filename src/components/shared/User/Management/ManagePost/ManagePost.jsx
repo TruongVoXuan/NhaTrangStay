@@ -5,6 +5,7 @@ import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import { Ellipsis } from "lucide-react";
 import { postAPI } from "lib/apiService";
+import { useNavigate } from "react-router-dom";
 import PopUpDetail from "../PopUpDetail/PopUpDetail";
 import { toast } from "react-toastify";
 
@@ -18,6 +19,9 @@ const ManagePost = () => {
   const [posts, setPosts] = useState([]);
   const [status, setStatus] = useState("ALL");
   const [selectedDate, setSelectedDate] = useState("");
+
+  const navigate = useNavigate();
+  const PAGE_SIZE = 5;
 
   const openEditPopup = (post) => {
   if (post.status !== "APPROVED") {
@@ -106,10 +110,10 @@ const ManagePost = () => {
                 <div onClick={() => { setStatus("ALL"); setOpenStatus(false); }} className="status-top">TẤT CẢ</div>
                 <div onClick={() => { setStatus("PENDING"); setOpenStatus(false); }} className="status-top">CHỜ DUYỆT</div>
                 <div onClick={() => { setStatus("APPROVED"); setOpenStatus(false); }} className="status">ĐÃ DUYỆT</div>
-                <div onClick={() => { setStatus("CANCELED"); setOpenStatus(false); }} className="status">ĐÃ TỪ CHỐI</div>
+                {/* <div onClick={() => { setStatus("CANCELED"); setOpenStatus(false); }} className="status">ĐÃ TỪ CHỐI</div> */}
                 <div onClick={() => { setStatus("REJECTED"); setOpenStatus(false); }} className="status">ĐÃ TỪ CHỐI</div>
-                <div onClick={() => { setStatus("EXPIRED"); setOpenStatus(false); }} className="status">HẾT HẠN</div>
-                <div onClick={() => { setStatus("DELETED"); setOpenStatus(false); }} className="status-bottom">ĐÃ XÓA</div>
+                {/* <div onClick={() => { setStatus("EXPIRED"); setOpenStatus(false); }} className="status">HẾT HẠN</div>
+                <div onClick={() => { setStatus("DELETED"); setOpenStatus(false); }} className="status-bottom">ĐÃ XÓA</div> */}
                 <div onClick={() => { setStatus("LOCKED"); setOpenStatus(false); }} className="status-bottom">TẠM KHÓA</div>
               </div>
             )}
@@ -157,7 +161,7 @@ const ManagePost = () => {
             // 4. Tổng hợp: Khớp CẢ 3 điều kiện (Trạng thái + Giá + Ngày) thì mới cho lên hình
             if (isStatusMatch && isPriceMatch && isDateMatch) {
               return (
-                <div key={index} className="render-inf-post">
+                <div key={index} className="render-inf-post"  onClick={() => navigate(`/post/${post.id}`)}>
                   <div className="img-post-container">
                     <img 
                       className="img-room" 
@@ -194,14 +198,15 @@ const ManagePost = () => {
 )}
                   </div>
                   <div className="ellipsis-container">
-                    <div
-                      className="ellipsis"
-                      onClick={() => {
-                        openEditPopup(post);
-                      }}
-                    >
-                      <Ellipsis />
-                    </div>
+                   <div
+  className="ellipsis"
+  onClick={(e) => {
+    e.stopPropagation();
+    openEditPopup(post);
+  }}
+>
+  <Ellipsis />
+</div>
                   </div>
                 </div>
               );

@@ -201,8 +201,8 @@ const PopUpDetail = ({
               onChange={handleChange}
             >
               <option value={1}>Phòng Trọ</option>
-              <option value={2}>Căn Hộ</option>
-              <option value={3}>Kí Túc Xá</option>
+              <option value={2}>Chung cư</option>
+              <option value={3}>Nhà Nguyên Căn</option>
             </select>
           </div>
 

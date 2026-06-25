@@ -20,6 +20,9 @@ const PendingPostsPage = () => {
   const [posts, setPosts] = useState([]);
   const [search, setSearch] = useState("");
 
+  const [showUnlockModal, setShowUnlockModal] = useState(false);
+const [selectedPostId, setSelectedPostId] = useState(null);
+
 const [currentPage, setCurrentPage] = useState(1);
 
 const POSTS_PER_PAGE = 3;
@@ -77,20 +80,32 @@ const handleReject = async (id) => {
 const handleLock = async (id) => {
   try {
     await postAPI.lockPost(id);
-    setPosts((prev) => prev.map((p) => p.id === id ? { ...p, status: "PENDING" } : p));
+    setPosts((prev) => prev.map((p) => p.id === id ? { ...p, status: "LOCKED" } : p));
     toast.success("Đã khóa bài đăng và thông báo tới chủ trọ!");
   } catch (err) {
     toast.error("Khóa thất bại!");
   }
 };
 
-const handleUnlock = async (id) => {
+const confirmUnlock = async () => {
   try {
-    await postAPI.unlockPost(id);
-    setPosts((prev) => prev.map((p) => p.id === id ? { ...p, status: "APPROVED" } : p));
+    await postAPI.unlockPost(selectedPostId);
+
+    setPosts((prev) =>
+      prev.map((p) =>
+        p.id === selectedPostId
+          ? { ...p, status: "APPROVED" }
+          : p
+      )
+    );
+
     toast.success("Đã mở khóa bài đăng!");
+
+    setShowUnlockModal(false);
+    setSelectedPostId(null);
+
   } catch (err) {
-    toast.error("Mở khóa that bại!");
+    toast.error("Mở khóa thất bại!");
   }
 };
 
@@ -111,7 +126,63 @@ const totalPages = Math.ceil(
   filteredPosts.length / POSTS_PER_PAGE
 );
 
+
+//  PHÂN TRANG
+const getPaginationPages = () => {
+  let startPage = Math.max(currentPage - 2, 1);
+  let endPage = startPage + 4;
+
+  if (endPage > totalPages) {
+    endPage = totalPages;
+    startPage = Math.max(endPage - 4, 1);
+  }
+
+  return Array.from(
+    { length: endPage - startPage + 1 },
+    (_, i) => startPage + i
+  );
+};
+
   return (
+    <>
+{showUnlockModal && (
+  <div className="unlock-modal-overlay">
+    <div className="unlock-modal">
+      <h3>Xác nhận mở khóa bài đăng?</h3>
+
+      <p>
+        Bài đăng này trước đó đã bị từ chối vì có thể chứa:
+      </p>
+
+      <ul>
+        <li>Nội dung phản cảm hoặc không phù hợp</li>
+        <li>Ngôn từ bạo lực, xúc phạm</li>
+        <li>Hình ảnh không chuẩn mực</li>
+        <li>Thông tin gây hiểu nhầm</li>
+      </ul>
+
+      <p>
+        Việc mở khóa sẽ cho phép bài đăng hiển thị công khai trở lại.
+      </p>
+
+      <div className="modal-actions">
+        <button
+          className="cancel-btn"
+          onClick={() => setShowUnlockModal(false)}
+        >
+          Hủy
+        </button>
+
+        <button
+          className="confirm-btn"
+          onClick={confirmUnlock}
+        >
+          Vẫn mở khóa
+        </button>
+      </div>
+    </div>
+  </div>
+)}
     <div className="pending-posts-page">
       {/* HEADER */}
       <div className="page-header">
@@ -210,8 +281,14 @@ const totalPages = Math.ceil(
 <button className="locked-disabled" disabled>
       Đang bị khóa
 </button>
-<button className="unlock-btn" onClick={() => handleUnlock(p.id)}>
-      Mở khóa
+<button
+  className="unlock-btn"
+  onClick={() => {
+    setSelectedPostId(p.id);
+    setShowUnlockModal(true);
+  }}
+>
+  Mở khóa
 </button>
 </div>
   ) : p.status === "APPROVED" ? (
@@ -223,11 +300,23 @@ const totalPages = Math.ceil(
         Khóa bài
 </button>
 </div>
-  ) : p.status === "REJECTED" ? (
-<button className="rejected-disabled" disabled>
-      Đã Từ Chối
-</button>
-  ) : (
+) : p.status === "REJECTED" ? (
+<div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+  <button className="rejected-disabled" disabled>
+    Đã Từ Chối
+  </button>
+
+  <button
+    className="unlock-btn"
+    onClick={() => {
+      setSelectedPostId(p.id);
+      setShowUnlockModal(true);
+    }}
+  >
+    Mở khóa
+  </button>
+</div>
+) : (
 <>
 <button className="approve-btn" onClick={() => handleApprove(p.id)}>
 <Check size={16} />
@@ -257,19 +346,21 @@ const totalPages = Math.ceil(
     Previous
   </button>
 
-  {[...Array(totalPages)].map((_, index) => (
-    <button
-      key={index}
-      className={
-        currentPage === index + 1
-          ? "active-page"
-          : ""
-      }
-      onClick={() => setCurrentPage(index + 1)}
-    >
-      {index + 1}
-    </button>
-  ))}
+ 
+{/* PHÂN TRANG */}
+  {getPaginationPages().map((page) => (
+  <button
+    key={page}
+    className={
+      currentPage === page
+        ? "active-page"
+        : ""
+    }
+    onClick={() => setCurrentPage(page)}
+  >
+    {page}
+  </button>
+))}
 
   <button
     disabled={currentPage === totalPages}
@@ -279,7 +370,11 @@ const totalPages = Math.ceil(
   </button>
 </div>
     </div>
+
+    </>
   );
+
+  
 };
 
 export default PendingPostsPage;

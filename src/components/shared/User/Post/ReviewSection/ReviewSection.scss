@@ -172,3 +172,39 @@
     }
   }
 }
+
+.review-group {
+  margin-bottom: 24px;
+}
+
+.review-group-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.review-group-header .reviewer-name {
+  font-weight: 600;
+}
+
+.review-item.nested {
+  margin-left: 50px;
+  margin-bottom: 12px;
+  border-left: 2px solid #eee;
+  padding-left: 15px;
+}
+
+.review-group-header .reviewer-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.review-group-header .reviewer-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

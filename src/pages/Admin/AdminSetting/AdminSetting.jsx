@@ -85,8 +85,11 @@ const [showPassword, setShowPassword] = useState({
 
       
     // nếu có nhập password thì bắt buộc đủ cả 2
-   if (!temp.currentPassword || !temp.newPassword) {
-  toast.warning("Vui lòng nhập mật khẩu");
+   if (
+  (temp.currentPassword && !temp.newPassword) ||
+  (!temp.currentPassword && temp.newPassword)
+) {
+  toast.warning("Vui lòng nhập đầy đủ mật khẩu hiện tại và mật khẩu mới");
   return;
 }
 
@@ -167,7 +170,7 @@ const [showPassword, setShowPassword] = useState({
 
         {/* HEADER */}
         <div className="top-header">
-          <h2>Admin Settings</h2>
+          <h2>Cài đặt quản trị viên</h2>
 
           {!edit ? (
             <button className="edit-btn" onClick={() => setEdit(true)}>

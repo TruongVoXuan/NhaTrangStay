@@ -393,7 +393,7 @@ const handleWardChange = (e) => {
                             <select value={typeId} onChange={(e) => setTypeId(Number(e.target.value))}>
                                 <option value="">Chọn loại hình</option>
                                 <option value={1}>Phòng Trọ</option>
-                                <option value={2}>Chưng cư</option>
+                                <option value={2}>Chung cư</option>
                                 <option value={3}>Nhà Nguyên Căn</option>
                             </select>
 

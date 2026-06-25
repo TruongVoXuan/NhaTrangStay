@@ -1,14 +1,22 @@
-import background from "assets/images/Background.png";
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import background  from "assets/images/backLogin.png";
+import React, { useState, useEffect  } from "react";
+import { useNavigate,useSearchParams } from "react-router-dom";
 import { Key, Eye, EyeOff } from "lucide-react";
 import "./ResetPasswordPage.scss";
 import { toast } from "react-toastify";
+import { api } from "../../../lib/api";
+
+
 // Preload ảnh nền để không bị chớp trắng
 const preloadImage = new Image();
 preloadImage.src = background;
 
 const ResetPasswordPage = () => {
+
+  
+const [searchParams] = useSearchParams();
+
+const resetToken = searchParams.get("resetToken");
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     password: "",
@@ -18,6 +26,23 @@ const ResetPasswordPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+  useEffect(() => {
+  const verifyToken = async () => {
+    try {
+      await api.get(
+        `/api/auth/verify-resettoken-mail?resetToken=${resetToken}`
+      );
+    } catch (err) {
+      toast.error("Token không hợp lệ hoặc đã hết hạn");
+      navigate("/forgot-password");
+    }
+  };
+
+  if (resetToken) {
+    verifyToken();
+  }
+}, [resetToken, navigate]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -25,30 +50,42 @@ const ResetPasswordPage = () => {
     if (errors[name]) setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const newErrors = {};
+  const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    if (!formData.password) {
-      newErrors.password = "Vui lòng nhập mật khẩu mới";
-    }
-    if (!formData.confirmPassword) {
-      newErrors.confirmPassword = "Vui lòng xác nhận lại mật khẩu";
-    } else if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = "Mật khẩu không khớp";
-    }
+  const newErrors = {};
 
-    setErrors(newErrors);
+  if (!formData.password) {
+    newErrors.password = "Vui lòng nhập mật khẩu mới";
+  }
 
-    if (Object.keys(newErrors).length === 0) {
-      console.log("Password reset successfully with:", formData.password);
-      // Gọi API đổi mật khẩu ở đây...
+  if (!formData.confirmPassword) {
+    newErrors.confirmPassword = "Vui lòng xác nhận mật khẩu";
+  } else if (formData.password !== formData.confirmPassword) {
+    newErrors.confirmPassword = "Mật khẩu không khớp";
+  }
 
-      // Chuyển hướng về trang đăng nhập sau khi thành công
+  setErrors(newErrors);
+
+  if (Object.keys(newErrors).length === 0) {
+    try {
+      await api.post("/api/auth/change-password", {
+        resetToken,
+        newPassword: formData.password,
+        comfirmPassword: formData.confirmPassword,
+      });
+
       toast.success("Đổi mật khẩu thành công!");
       navigate("/login");
+    } catch (err) {
+      toast.error(
+        err.response?.data?.message ||
+        err.response?.data ||
+        "Đổi mật khẩu thất bại"
+      );
     }
-  };
+  }
+};
 
   return (
     <div

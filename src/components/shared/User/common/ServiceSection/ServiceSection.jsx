@@ -44,9 +44,9 @@ function ServiceSection() {
                 khá thấp, không còn tình trạng phòng trống kéo dài
             </div>
             <div className="contact">
-                - Anh Thành (chủ hệ thống phòng trọ tại Khánh Hòa)
+                - TruongVX (chủ hệ thống bất động sản tại Khánh Hòa)
             </div>
-            <div className="ask">Bạn đang có phòng trọ cho thuê?</div>
+            <div className="ask">Bạn đang có phòng cho thuê?</div>
             <div className="find">
                 Không phải lo tìm người cho thuê, phòng trống kéo dài
             </div>
@@ -54,7 +54,7 @@ function ServiceSection() {
                 <button
                     className="post-now-btn"
                     type="button"
-                    onClick={() => navigate("/user/post-news")}
+                    onClick={() => navigate("/post")}
                 >
                     <span className="post-now-icon">
                         <SquarePen />

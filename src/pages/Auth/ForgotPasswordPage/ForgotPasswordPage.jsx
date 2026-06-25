@@ -1,9 +1,9 @@
-import background from "assets/images/Background.png";
+import background  from "assets/images/backLogin.png";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Key, ArrowLeft, Loader } from "lucide-react";
 import "./ForgotPasswordPage.scss";
-
+import { api } from "../../../lib/api";
 // Tải trước ảnh (vẫn giữ nguyên để tối ưu)
 const preloadImage = new Image();
 preloadImage.src = background;
@@ -20,17 +20,33 @@ const ForgotPasswordPage = () => {
     if (error) setError("");
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!identifier.trim()) {
-      setError("Vui lòng nhập Email hoặc Số Điện Thoại");
-      return;
-    }
+  const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    console.log("Request reset password for:", identifier);
+  if (!identifier.trim()) {
+    setError("Vui lòng nhập Email đã đăng ký");
+    return;
+  }
+
+  try {
+    const response = await api.post("/api/auth/forgot-password", {
+      email: identifier,
+    });
+
+    console.log(response.data);
+
     setIsSubmitted(true);
     setCountdown(60);
-  };
+  } catch (error) {
+    console.error(error);
+
+    setError(
+      error.response?.data?.message ||
+      error.response?.data ||
+      "Không thể gửi email xác nhận"
+    );
+  }
+};
 
   useEffect(() => {
     let timer;
@@ -77,10 +93,10 @@ const ForgotPasswordPage = () => {
         {!isSubmitted ? (
           <form className="forgot-form" onSubmit={handleSubmit}>
             <div className="form-group">
-              <label>Email / Số Điện Thoại</label>
+              <label>Nhập Email đã đăng ký</label>
               <input
                 type="text"
-                placeholder="Vui Lòng Nhập Email Hoặc Số Điện Thoại"
+                placeholder="Vui Lòng Nhập Email Đã Đăng Ký"
                 value={identifier}
                 onChange={handleChange}
                 className={error ? "input-error" : ""}
@@ -105,9 +121,12 @@ const ForgotPasswordPage = () => {
               <Loader size={64} color="#aaa" className="spinner-icon" />
             </div>
 
-            <div className="loading-text-wrapper">
-              <span className="loading-text">LOADING...</span>
-            </div>
+            <div className="success-container">
+  <h3>Đã gửi email xác nhận</h3>
+  <p>
+    Vui lòng kiểm tra email để tiếp tục đặt lại mật khẩu.
+  </p>
+</div>
 
             <div
               className={`resend-text ${countdown === 0 ? "active" : ""}`}

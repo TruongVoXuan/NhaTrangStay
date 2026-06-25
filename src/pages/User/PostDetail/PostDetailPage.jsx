@@ -166,7 +166,7 @@ const filteredPosts = useMemo(() => {
     });
   }
 
-  //  GIỮ NGUYÊN TOÀN BỘ FILTER CỦA M
+  //  GIỮ NGUYÊN TOÀN BỘ FILTER
   return data.filter((item) => {
     if (filters.priceMin && item.price < filters.priceMin) return false;
     if (filters.priceMax && item.price > filters.priceMax) return false;
@@ -730,7 +730,12 @@ navigate(`/khu-vuc/${encodeURIComponent(shortLocation)}`);
 </div>
 </div>
 
-<a className="phone" href={`tel:${owner?.phone || ""}`}>
+<a
+  className="phone"
+  href={`https://zalo.me/${owner?.phone || ""}`}
+  target="_blank"
+  rel="noopener noreferrer"
+>
   {owner?.phone}
 </a>
           <div className="hint">

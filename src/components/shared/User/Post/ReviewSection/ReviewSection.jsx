@@ -76,6 +76,21 @@ const ReviewSection = ({ postId }) => {
     }
   };
 
+  const groupedReviews = reviews.reduce((acc, review) => {
+  const userId = review.user?.id || "anonymous";
+
+  if (!acc[userId]) {
+    acc[userId] = {
+      user: review.user,
+      reviews: [],
+    };
+  }
+
+  acc[userId].reviews.push(review);
+
+  return acc;
+}, {});
+
   return (
     <div className="review-section-container">
       <h3 className="review-title">
@@ -139,40 +154,91 @@ const ReviewSection = ({ postId }) => {
             Chưa có đánh giá nào. Hãy là người đầu tiên đánh giá!
           </p>
         ) : (
-          reviews.map((rev, index) => (
-            <div key={rev.id || index} className="review-item">
-              <div className="reviewer-avatar">
-                {rev.user?.avatar ? (
-                  <img src={rev.user.avatar} alt="avatar" />
-                ) : (
-                  <User size={24} color="#666" />
-                )}
-              </div>
-              <div className="review-content-box">
-                <div className="review-header">
-                  <span className="reviewer-name">
-                    {rev.user?.username || "Người dùng ẩn danh"}
-                  </span>
-                  <span className="review-date">
-                    {new Date(rev.createdAt).toLocaleDateString("vi-VN")}
-                  </span>
-                </div>
-                <div className="review-stars">
-                  {/* Hiển thị số sao của comment này */}
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      size={14}
-                      className={
-                        i < (rev.rating || 5) ? "star-active" : "star-inactive"
-                      }
-                    />
-                  ))}
-                </div>
-                <p className="review-text">{rev.content || rev.comment}</p>
-              </div>
-            </div>
-          ))
+          // reviews.map((rev, index) => (
+          //   <div key={rev.id || index} className="review-item">
+          //     <div className="reviewer-avatar">
+          //       {rev.user?.avatar ? (
+          //         <img src={rev.user.avatar} alt="avatar" />
+          //       ) : (
+          //         <User size={24} color="#666" />
+          //       )}
+          //     </div>
+          //     <div className="review-content-box">
+          //       <div className="review-header">
+          //         <span className="reviewer-name">
+          //           {rev.user?.username || "Người dùng ẩn danh"}
+          //         </span>
+          //         <span className="review-date">
+          //           {new Date(rev.createdAt).toLocaleDateString("vi-VN")}
+          //         </span>
+          //       </div>
+          //       <div className="review-stars">
+          //         {/* Hiển thị số sao của comment này */}
+          //         {[...Array(5)].map((_, i) => (
+          //           <Star
+          //             key={i}
+          //             size={14}
+          //             className={
+          //               i < (rev.rating || 5) ? "star-active" : "star-inactive"
+          //             }
+          //           />
+          //         ))}
+          //       </div>
+          //       <p className="review-text">{rev.content || rev.comment}</p>
+          //     </div>
+          //   </div>
+          // ))
+
+          Object.values(groupedReviews).map((group, groupIndex) => (
+  <div key={group.user?.id || groupIndex} className="review-group">
+
+    <div className="review-group-header">
+      <div className="reviewer-avatar">
+        {group.user?.avatar ? (
+          <img src={group.user.avatar} alt="avatar" />
+        ) : (
+          <User size={24} color="#666" />
+        )}
+      </div>
+
+      <div className="reviewer-name">
+        {group.user?.username || "Người dùng ẩn danh"}
+      </div>
+    </div>
+
+    {group.reviews.map((rev, index) => (
+      <div key={rev.id || index} className="review-item nested">
+
+        <div className="review-content-box">
+          <div className="review-header">
+            <span className="review-date">
+              {new Date(rev.createdAt).toLocaleDateString("vi-VN")}
+            </span>
+          </div>
+
+          <div className="review-stars">
+            {[...Array(5)].map((_, i) => (
+              <Star
+                key={i}
+                size={14}
+                className={
+                  i < (rev.rating || 5)
+                    ? "star-active"
+                    : "star-inactive"
+                }
+              />
+            ))}
+          </div>
+
+          <p className="review-text">
+            {rev.content || rev.comment}
+          </p>
+
+        </div>
+      </div>
+    ))}
+  </div>
+))
         )}
       </div>
     </div>

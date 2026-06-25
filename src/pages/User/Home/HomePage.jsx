@@ -5,6 +5,7 @@ import OptionSection from "components/shared/User/common/OptionSection/OptionSec
 import NewPostSection from "components/shared/User/Post/NewPostSection/NewPostSection";
 import SelectionSection from "components/shared/User/common/SelectionSection/SelectionSection";
 import ServiceSection from "components/shared/User/common/ServiceSection/ServiceSection";
+import Pagination from "components/shared/User/Home/Pagination/Pagination";
 import { usePostSearch } from "hooks/usePostSearch";
 import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
@@ -13,12 +14,15 @@ import HeroLayout from "components/layout/HeroLayout/HeroLayout";
 function HomePage() {
   const [searchParams] = useSearchParams();
   const contentRef = useRef(null);
-const [sortMode, setSortMode] = useState("default");
+  const [sortMode, setSortMode] = useState("default");
   const {
     posts,
     loading,
     error,
     totalElements,
+    totalPages,
+    page,
+    setPage,
     filters,
     updateFilters,
   } = usePostSearch();
@@ -182,6 +186,12 @@ const [sortMode, setSortMode] = useState("default");
                 ))
               )}
             </div>
+
+            <Pagination
+              currentPage={page}
+              totalPages={totalPages}
+              onPageChange={setPage}
+            />
           </section>
 
           <aside className="right-content">

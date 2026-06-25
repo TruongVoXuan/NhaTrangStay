@@ -38,7 +38,7 @@ function HomeFilterHeader({
   const handleSortClick = (type) => {
   if (!onSortChange) return;
 
-  // 🔥 chỉ toggle với "Được đánh giá cao nhất"
+  //  chỉ toggle với "Được đánh giá cao nhất"
   if (
     type === "Được đánh giá cao nhất" &&
     activeType === "Được đánh giá cao nhất"
